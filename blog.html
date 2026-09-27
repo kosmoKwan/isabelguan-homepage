@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-site-version="1.6.0">
+<html lang="zh-CN" data-site-version="1.7.0">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -88,6 +88,28 @@
     font-size: clamp(17px, 2vw, 20px);
     line-height: 1.8;
   }
+  .post-list { max-width: 860px; margin-top: 76px; border-top: 1px solid var(--rule); }
+  .post-link {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 18px;
+    padding: 25px 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+  }
+  .post-date { color: var(--ink-mute); font-size: 11px; letter-spacing: 0.04em; white-space: nowrap; }
+  .post-title {
+    font-family: 'Bricolage Grotesque', 'DM Sans', sans-serif;
+    font-size: clamp(21px, 2.5vw, 29px);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+  }
+  .post-arrow { color: var(--pink); font-size: 24px; line-height: 1; transition: transform 0.2s ease; }
+  .post-link:hover .post-title { color: var(--pink); }
+  .post-link:hover .post-arrow { transform: translate(3px, -3px); }
+  .post-link:focus-visible { outline: 2px solid var(--pink); outline-offset: 4px; }
   footer {
     width: calc(100% - 48px);
     max-width: 1100px;
@@ -101,6 +123,9 @@
   }
   @media (max-width: 600px) {
     main { padding: 44px 22px 72px; }
+    .post-list { margin-top: 56px; }
+    .post-link { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; }
+    .post-date { grid-column: 1 / -1; }
   }
   @media (max-width: 900px) {
     .nav-links { display: none; }
@@ -129,8 +154,15 @@
 <main>
   <h1>Blog<span>.</span></h1>
   <p class="intro">这里记录科研中的问题、发现与未竟的思考，也留存日常生活里值得回望的观察与感受。在求索与日常之间，留下一些诚实的文字。</p>
+  <section class="post-list" aria-label="文章列表">
+    <a class="post-link" href="posts/fly-connectome-walking-20260927.html">
+      <time class="post-date mono" datetime="2026-09-27">27 Sep 2026</time>
+      <span class="post-title">果蝇的腿，有多少是神经连接决定的？</span>
+      <span class="post-arrow" aria-hidden="true">↗</span>
+    </a>
+  </section>
 </main>
 
-<footer class="mono">Isabel Yani Guan · site v1.6.0 · updated Sep 2026</footer>
+<footer class="mono">Isabel Yani Guan · site v1.7.0 · updated Sep 2026</footer>
 </body>
 </html>

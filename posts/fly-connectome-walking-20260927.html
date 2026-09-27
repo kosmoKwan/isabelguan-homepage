@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-site-version="1.7.0">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="一篇关于果蝇神经连接图谱、腿部协调和机器人控制的科普文章。" />
+<title>果蝇的腿，有多少是神经连接决定的？ — Isabel Yani Guan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+XiaoWei&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;500;600;700&display=swap">
+<style>
+
+:root{
+  --cream:#FFF4E0; --cream-2:#FFEAC2; --pink:#FF4D8D; --yellow:#FFCB3A;
+  --bg:var(--cream); --surface:var(--cream-2); --ink:#2E2418; --muted:#5C4A37;
+  --line:rgba(46,36,24,.14); --amber:#B8442E; --amber-soft:#FFF0BE;
+  --green:#3152C7; --green-soft:#E8ECFF; --red:#B92963; --red-soft:#FFE3EC;
+  --grey:#8E7E69; --tint:#FFF0D3;
+  --display:"ZCOOL XiaoWei","Noto Serif SC","Songti SC",serif;
+  --body:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.85;
+  padding-inline:20px;padding-block:28px 64px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:42rem;margin-inline:auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;line-height:1.3;margin:0}
+p{margin:0}
+.stack{display:flex;flex-direction:column;gap:16px}
+.stack-s{display:flex;flex-direction:column;gap:10px}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--muted)}
+header.hero{display:flex;flex-direction:column;gap:18px;padding-top:12px}
+.hero h1{font-size:clamp(34px,7vw,52px)}
+.lede{font-size:18px;color:var(--ink)}
+.signal{display:inline-flex;gap:6px;align-items:center}
+.signal i{width:12px;height:12px;border-radius:50%;display:block}
+.signal .a{background:var(--amber)} .signal .g{background:var(--green)} .signal .r{background:var(--red)}
+.chapter{display:flex;flex-direction:column;gap:18px}
+.chapter-head{display:flex;align-items:baseline;gap:14px}
+.num{font-family:var(--mono);font-size:14px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;
+  min-width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;flex:none;transform:translateY(-4px)}
+.chapter h2{font-size:clamp(26px,5vw,34px)}
+h3{font-size:22px}
+.analogy{background:var(--amber-soft);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.analogy-label{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--amber)}
+.keymap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;margin:0;padding:0}
+.keymap div{display:flex;flex-direction:column;gap:2px;padding-block:10px;border-top:1px solid var(--line)}
+.keymap dt{font-weight:700}
+.keymap dd{margin:0;color:var(--muted);font-size:15.5px;line-height:1.6}
+ul.plain{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:8px}
+ol.rules{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:8px}
+.muted{color:var(--muted)}
+.small{font-size:15px;line-height:1.7}
+strong{font-weight:700}
+.figure{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.figure .cap{font-size:14.5px;color:var(--muted);line-height:1.65}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.panel-title{font-weight:700;font-size:15px}
+svg{display:block;width:100%;height:auto}
+.w-ext{fill:none;stroke:var(--amber);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.w-flx{fill:none;stroke:var(--green);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.svg-label{font-family:var(--body);font-size:13px;fill:var(--muted)}
+.svg-num{font-family:var(--mono);font-size:13px;fill:var(--ink)}
+.svg-group{font-family:var(--body);font-size:14px;font-weight:700;fill:var(--ink)}
+.bar-real{fill:var(--green)} .bar-null{fill:var(--grey)}
+.axis{stroke:var(--line);stroke-width:1}
+.results{display:flex;flex-direction:column;gap:14px}
+.result{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:start;padding-block:14px;border-top:1px solid var(--line)}
+.chip{font-size:13px;font-weight:700;letter-spacing:.04em;border-radius:999px;padding:2px 10px;white-space:nowrap;margin-top:3px}
+.ok{background:var(--green-soft);color:var(--green)}
+.no{background:var(--red-soft);color:var(--red)}
+.wip{background:var(--amber-soft);color:var(--amber)}
+.result h3{font-family:var(--body);font-weight:700;font-size:17.5px;line-height:1.5}
+.result .body{grid-column:2;display:flex;flex-direction:column;gap:8px}
+.cmp{display:flex;flex-direction:column;gap:0}
+.cmp-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 20px;padding-block:16px;border-top:1px solid var(--line)}
+.cmp-who{grid-column:1/-1;font-weight:700}
+.cmp-who span{font-weight:400;color:var(--muted);font-size:14.5px}
+.cmp-cell{display:flex;flex-direction:column;gap:4px;font-size:15.5px;line-height:1.7}
+.cmp-cell b{font-family:var(--mono);font-weight:500;font-size:12.5px;letter-spacing:.08em;color:var(--muted)}
+.cmp-cell.ours b{color:var(--green)}
+.takeaway{font-size:18px;border-top:2px solid var(--ink);padding-top:16px}
+.help{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.help div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.help div.key{border-color:var(--amber);background:var(--amber-soft)}
+.help b{font-size:16px}
+.help p{font-size:15px;line-height:1.7;color:var(--muted)}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px;line-height:1.6}
+th,td{text-align:left;padding:10px 12px 10px 0;border-top:1px solid var(--line);vertical-align:top}
+th{font-weight:700;font-size:13.5px;color:var(--muted);letter-spacing:.04em;border-top:none}
+td:first-child{font-weight:700;white-space:nowrap}
+footer{font-size:14px;color:var(--muted);line-height:1.7;border-top:1px solid var(--line);padding-top:18px}
+a{color:var(--green)}
+a:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+@media (max-width:560px){
+  body{font-size:16px}
+  .keymap,.pair,.help,.cmp-row{grid-template-columns:minmax(0,1fr)}
+  .result{grid-template-columns:1fr}
+  .result .body{grid-column:1}
+}
+
+
+/* Site navigation and article frame */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;padding:0;min-height:100vh}
+.site-nav{position:sticky;top:16px;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  margin:16px;padding:12px 20px;border-radius:100px;background:var(--pink);color:var(--cream);
+  font-family:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.2}
+.site-links{display:flex;gap:clamp(12px,1.5vw,24px);list-style:none;margin:0;padding:0;font-size:13px;font-weight:500}
+.site-links a{color:var(--cream);text-decoration:none;opacity:.85}
+.site-links a:hover{color:var(--yellow);opacity:1}
+.site-label{display:none;font-family:"Bricolage Grotesque",sans-serif;font-size:15px;font-weight:700}
+.site-tabs{display:flex;gap:4px;flex:none}
+.site-tab{padding:7px 14px;border-radius:100px;color:var(--cream);font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
+.site-tab:hover{color:var(--yellow)}
+.site-tab[aria-current="page"]{background:var(--cream);color:var(--ink)}
+.article-main{padding:56px 20px 84px}
+.site-version{max-width:1100px;margin:0 auto;padding:20px 24px 36px;border-top:1px solid var(--line);
+  color:#8E7E69;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+@media(max-width:900px){.site-links{display:none}.site-label{display:block}}
+@media(max-width:560px){.article-main{padding:40px 20px 72px}}
+
+</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site navigation">
+  <span class="site-label">Isabel ✦</span>
+  <ul class="site-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#recent-demo">Recent Demo</a></li>
+    <li><a href="../index.html#news">News</a></li>
+    <li><a href="../index.html#research">Research</a></li>
+    <li><a href="../index.html#teaching">Teaching</a></li>
+    <li><a href="../index.html#writing">Publications</a></li>
+    <li><a href="../index.html#entrepreneurship">Entrepreneurship</a></li>
+  </ul>
+  <div class="site-tabs" aria-label="Main pages">
+    <a class="site-tab" href="../index.html">Home</a>
+    <a class="site-tab" href="../blog.html" aria-current="page">Blog</a>
+  </div>
+</nav>
+<main class="article-main">
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">2026 年 9 月 · 一个中秋节开始的跨学科小研究</div>
+  <h1>果蝇的腿，有多少是神经连接决定的？</h1>
+</header>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="num">1</span><h2>一份新数据，和一个会走路的机器人</h2></div>
+  <div class="stack">
+    <p>最近，谷歌和 Janelia 研究所放出了一份数据：一只雄果蝇从大脑到腹神经索（相当于果蝇的"脊髓"）的完整神经连接图谱，16.6 万个神经元，谁和谁相连都画得清清楚楚。做神经科学的、做 AI 的，很多人都挺兴奋，这种级别的数据，几年前还很难想象。</p>
+    <p>我当时的第一个念头是：能不能拿它当机器人的"大脑"？于是我们团队做了个实验，叫 g1fly，主要是同事云天实现的：从果蝇的"脊髓"里取出 3,609 个神经元的连接图谱，塞进宇树 G1 人形机器人的控制网络中间，当它的"脊髓"。机器人在仿真里真的走起来了，当时还挺开心的。</p>
+    <p>先坦白一句：我的生物背景很浅，基本是从计算机的角度在看这些东西。下面如果有低级错误，还请大家谅解，也非常欢迎直接指出来。</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="num">2</span><h2>中秋节，把事情从头捋了一遍</h2></div>
+  <div class="stack">
+    <p>正好赶上中秋节，手头有了几天空闲，外加心里一直有点不踏实，我就把整个流程从头捋了一遍。越看越觉得，机器人能走，功劳好像不在果蝇身上。</p>
+    <p>它其实是"抄作业"学会的。先用强化学习训练一个"老师"网络，老师能直接看到仿真里脚下的地形高度，这种信息现实中是拿不到的；再让装着果蝇神经连接的"学生"网络去模仿老师的动作，这叫师生蒸馏。</p>
+    <p>而且网络两头都有大量可以训练的"转接头"。输入端那个就有约 23 万个参数，比果蝇神经连接本身的 10 万条连接还多，信号完全可以绕过果蝇；哪个神经元控制机器人的哪个关节，也是训练自己学的。从"大脑"到"脊髓"的那条通路，训练中很快就失效了，机器人其实是靠身体感觉在盲走。最关键的是，没人试过把果蝇的神经连接换成随机的，机器人还能不能走。</p>
+    <div class="analogy">
+      <div class="analogy-label"><span class="signal"><i class="a"></i><i class="g"></i><i class="r"></i></span>打个比方</div>
+      <p>这像给汽车装了一个"果蝇牌方向盘"，真正开车的却是后面训练出来的自动驾驶系统。把方向盘换成一根随便的棍子，车很可能照样开。</p>
+    </div>
+    <p>文献里也有类似的提醒：有人把线虫的神经连接接到果蝇的身体模型上，靠训练出来的"翻译器"，也能走得像果蝇。所以"机器人能走"证明不了果蝇的神经连接有用。这和我最初想做的事背道而驰：我想知道的，是果蝇的神经连接本身能做什么，而不是训练流程能做什么。</p>
+    <p>于是中秋这几天，我干脆换了个问题问：<strong>去掉所有训练出来的部分，果蝇的神经连接本身，能做到哪些随机连接做不到的事？</strong></p>
+    <p>想清楚之后，我把机器人先放一边，给自己定了三条规矩：</p>
+    <ol class="rules">
+      <li><strong>什么都不训练。</strong>神经连接原样使用，每条连接的强弱就用真实的突触数量。</li>
+      <li><strong>只走"正门"。</strong>指令只从"开始走"按钮（一个叫 DNg100 的神经元）进去，结果只从支配腿部肌肉的运动神经元读出来。</li>
+      <li><strong>每个结论都要和打乱的连接图谱比。</strong>真实的神经连接做到、打乱的也做到的事，就不算神经连接的功劳。</li>
+    </ol>
+    <p>数据用了两只不同果蝇的神经连接图谱：<strong>MaleCNS</strong>（就是新闻里那份，我取出了管六条腿的 10,173 个神经元、462,650 条连接），以及 <strong>MANC</strong>（另一只果蝇的"脊髓"，用来检验结果能不能在别的果蝇身上复现）。做法说起来很简单：在电脑里给这张图"通电"，按下走路按钮，看腿上的肌肉信号怎么变化。</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="analogy">
+    <div class="analogy-label"><span class="signal"><i class="a"></i><i class="g"></i><i class="r"></i></span>讲实验之前，先认识一个比方</div>
+    <p>把果蝇的神经系统想成一座城市。后面讲实验和结果时，会一直用到下面这几个对应关系：</p>
+    <dl class="keymap">
+      <div><dt>神经元</dt><dd>一个路口</dd></div>
+      <div><dt>神经元之间的连接</dt><dd>路口之间的路，路越宽，影响越强</dd></div>
+      <div><dt>神经连接图谱（连接组）</dt><dd>整座城市的道路地图，科学家用电子显微镜一个一个拍出来的</dd></div>
+      <div><dt>一对对抗的肌肉</dt><dd>十字路口的两组灯：一组让腿伸，一组让腿弯</dd></div>
+      <div><dt>节律</dt><dd>灯有节奏地一闪一闪</dd></div>
+      <div><dt>协调</dt><dd>两组灯轮流亮，不同时绿，腿才不会僵住</dd></div>
+      <div><dt>打乱的连接图谱（零模型）</dt><dd>把路随机重新连一遍的假地图，但保留路口数量这类基本统计</dd></div>
+      <div><dt>"开始走"按钮</dt><dd>一个叫 DNg100 的神经元，刺激它，果蝇就会走</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="num">3</span><h2>实验怎么设计</h2></div>
+  <div class="stack">
+    <p><strong>造打乱的连接图谱。</strong>我们造了 6 种打乱方式，从粗到细，每种 5 张：只保留路的总数；再保留路口类型；再保留每个路口连几条路；再保留每条腿内部的路数，或每个神经元"家族"（发育上同源的一群神经元）之间的路数；最后两者都保留。越往后，假地图越像真的。</p>
+    <p><strong>公平比赛。</strong>模型有几个旋钮：整体灵敏度、"刹车"的强弱、按钮按多用力。每张地图都给同样的 132 种调法，各自挑最好的成绩，谁也不占便宜。</p>
+    <p><strong>先定及格线，再看成绩。</strong>判断标准在看结果之前就写下来存档。比如"真实的神经连接要超过全部 30 张打乱的连接图谱，而且对每一类都高出至少 0.15，才算强"。这叫预注册，防止看到结果后再改标准。</p>
+    <p><strong>换一批随机数重考一遍。</strong>每张图锁定最佳调法后，用全新的随机数、更长的 60 秒模拟再跑 20 次，排除"碰巧挑到运气好的那次"。</p>
+    <p><strong>做"手术"。</strong>故意把控制线在"伸灯"和"弯灯"之间调换，看轮流亮会不会消失。</p>
+    <p class="muted small">我和 AI 助手（Claude、ChatGPT）一起写代码、跑模拟、互相审稿。所有判断标准、代码和原始数据都存档在实验室的 NAS 上。</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="num">4</span><h2>结果：哪些做成了，哪些失败了</h2></div>
+
+<div class="figure">
+    <div class="pair">
+      <div class="stack-s">
+        <div class="panel-title">真实神经连接：两组灯轮流亮</div>
+        <svg viewBox="0 0 320 210" role="img" aria-label="示意图：真实神经连接中伸肌组和屈肌组此起彼伏">
+          <text class="svg-label" x="20" y="28">伸肌组（让腿伸）</text>
+          <path class="w-ext" d="M20.0,70.0 L25.8,61.6 L31.7,54.2 L37.5,48.4 L43.3,44.9 L49.2,44.1 L55.0,46.0 L60.8,50.5 L66.7,57.0 L72.5,64.9 L78.3,73.4 L84.2,81.5 L90.0,88.4 L95.8,93.3 L101.7,95.8 L107.5,95.5 L113.3,92.5 L119.2,87.1 L125.0,79.9 L130.8,71.7 L136.7,63.3 L142.5,55.6 L148.3,49.4 L154.2,45.4 L160.0,44.0 L165.8,45.4 L171.7,49.4 L177.5,55.6 L183.3,63.3 L189.2,71.7 L195.0,79.9 L200.8,87.1 L206.7,92.5 L212.5,95.5 L218.3,95.8 L224.2,93.3 L230.0,88.4 L235.8,81.5 L241.7,73.4 L247.5,64.9 L253.3,57.0 L259.2,50.5 L265.0,46.0 L270.8,44.1 L276.7,44.9 L282.5,48.4 L288.3,54.2 L294.2,61.6 L300.0,70.0"/>
+          <text class="svg-label" x="20" y="122">屈肌组（让腿弯）</text>
+          <path class="w-flx" transform="translate(0,10)" d="M20.0,150.0 L25.8,158.4 L31.7,165.8 L37.5,171.6 L43.3,175.1 L49.2,175.9 L55.0,174.0 L60.8,169.5 L66.7,163.0 L72.5,155.1 L78.3,146.6 L84.2,138.5 L90.0,131.6 L95.8,126.7 L101.7,124.2 L107.5,124.5 L113.3,127.5 L119.2,132.9 L125.0,140.1 L130.8,148.3 L136.7,156.7 L142.5,164.4 L148.3,170.6 L154.2,174.6 L160.0,176.0 L165.8,174.6 L171.7,170.6 L177.5,164.4 L183.3,156.7 L189.2,148.3 L195.0,140.1 L200.8,132.9 L206.7,127.5 L212.5,124.5 L218.3,124.2 L224.2,126.7 L230.0,131.6 L235.8,138.5 L241.7,146.6 L247.5,155.1 L253.3,163.0 L259.2,169.5 L265.0,174.0 L270.8,175.9 L276.7,175.1 L282.5,171.6 L288.3,165.8 L294.2,158.4 L300.0,150.0"/>
+        </svg>
+      </div>
+      <div class="stack-s">
+        <div class="panel-title">打乱的连接：会闪，但同时亮</div>
+        <svg viewBox="0 0 320 210" role="img" aria-label="示意图：打乱的连接中两组肌肉同时起落">
+          <text class="svg-label" x="20" y="28">伸肌组（让腿伸）</text>
+          <path class="w-ext" d="M20.0,70.0 L25.8,61.6 L31.7,54.2 L37.5,48.4 L43.3,44.9 L49.2,44.1 L55.0,46.0 L60.8,50.5 L66.7,57.0 L72.5,64.9 L78.3,73.4 L84.2,81.5 L90.0,88.4 L95.8,93.3 L101.7,95.8 L107.5,95.5 L113.3,92.5 L119.2,87.1 L125.0,79.9 L130.8,71.7 L136.7,63.3 L142.5,55.6 L148.3,49.4 L154.2,45.4 L160.0,44.0 L165.8,45.4 L171.7,49.4 L177.5,55.6 L183.3,63.3 L189.2,71.7 L195.0,79.9 L200.8,87.1 L206.7,92.5 L212.5,95.5 L218.3,95.8 L224.2,93.3 L230.0,88.4 L235.8,81.5 L241.7,73.4 L247.5,64.9 L253.3,57.0 L259.2,50.5 L265.0,46.0 L270.8,44.1 L276.7,44.9 L282.5,48.4 L288.3,54.2 L294.2,61.6 L300.0,70.0"/>
+          <text class="svg-label" x="20" y="122">屈肌组（让腿弯）</text>
+          <path class="w-flx" transform="translate(0,10)" d="M20.0,150.0 L25.8,141.6 L31.7,134.2 L37.5,128.4 L43.3,124.9 L49.2,124.1 L55.0,126.0 L60.8,130.5 L66.7,137.0 L72.5,144.9 L78.3,153.4 L84.2,161.5 L90.0,168.4 L95.8,173.3 L101.7,175.8 L107.5,175.5 L113.3,172.5 L119.2,167.1 L125.0,159.9 L130.8,151.7 L136.7,143.3 L142.5,135.6 L148.3,129.4 L154.2,125.4 L160.0,124.0 L165.8,125.4 L171.7,129.4 L177.5,135.6 L183.3,143.3 L189.2,151.7 L195.0,159.9 L200.8,167.1 L206.7,172.5 L212.5,175.5 L218.3,175.8 L224.2,173.3 L230.0,168.4 L235.8,161.5 L241.7,153.4 L247.5,144.9 L253.3,137.0 L259.2,130.5 L265.0,126.0 L270.8,124.1 L276.7,124.9 L282.5,128.4 L288.3,134.2 L294.2,141.6 L300.0,150.0"/>
+        </svg>
+      </div>
+    </div>
+    <p class="cap">示意图，用来说明概念，不是真实数据。左边：一组起来时另一组落下，腿可以一伸一弯地迈步。右边：两组同时起落，就像两边同时用力，腿会僵住。</p>
+  </div>
+
+  <div class="results">
+    <div class="result">
+      <span class="chip ok">做成了</span>
+      <h3>核心发现：灯会闪不稀奇，轮流亮才是神经连接的签名</h3>
+      <div class="body">
+        <p>打乱的连接图谱也能让灯有节奏地闪，有的比真实的还整齐（节律评分最高 0.96，真实的神经连接 0.70）。但"两组灯轮流亮"只有真实的神经连接做得到，两只果蝇都是这样。按事先写好的标准，第一只果蝇达到"强"，第二只达到"中"，算作复现成立。</p>
+      </div>
+    </div>
+
+<div class="figure">
+      <svg viewBox="0 0 640 214" role="img" aria-label="协调评分：MaleCNS 真实神经连接 0.31，最强的打乱连接 0.14；MANC 真实神经连接 0.17，最强的打乱连接 0.08">
+        <text class="svg-group" x="0" y="22">MaleCNS（第一只果蝇）</text>
+        <text class="svg-label" x="140" y="48" text-anchor="end">真实神经连接</text>
+        <rect class="bar-real" x="150" y="34" width="374.4" height="20" rx="3"/>
+        <text class="svg-num" x="532" y="49">0.31</text>
+        <text class="svg-label" x="140" y="76" text-anchor="end">最强的打乱连接</text>
+        <rect class="bar-null" x="150" y="62" width="172.8" height="20" rx="3"/>
+        <text class="svg-num" x="331" y="77">0.14</text>
+        <text class="svg-group" x="0" y="112">MANC（第二只果蝇）</text>
+        <text class="svg-label" x="140" y="138" text-anchor="end">真实神经连接</text>
+        <rect class="bar-real" x="150" y="124" width="207.6" height="20" rx="3"/>
+        <text class="svg-num" x="366" y="139">0.17</text>
+        <text class="svg-label" x="140" y="166" text-anchor="end">最强的打乱连接</text>
+        <rect class="bar-null" x="150" y="152" width="100.8" height="20" rx="3"/>
+        <text class="svg-num" x="259" y="167">0.08</text>
+        <line class="axis" x1="150" y1="184" x2="570" y2="184"/>
+        <line class="axis" x1="150" y1="184" x2="150" y2="190"/><text class="svg-label" x="150" y="206" text-anchor="middle">0</text>
+        <line class="axis" x1="270" y1="184" x2="270" y2="190"/><text class="svg-label" x="270" y="206" text-anchor="middle">0.1</text>
+        <line class="axis" x1="390" y1="184" x2="390" y2="190"/><text class="svg-label" x="390" y="206" text-anchor="middle">0.2</text>
+        <line class="axis" x1="510" y1="184" x2="510" y2="190"/><text class="svg-label" x="510" y="206" text-anchor="middle">0.3</text>
+      </svg>
+      <p class="cap">真实数据："两组灯轮流亮"的评分（0 表示没有轮流，越高越好）。锁定调法后，用新随机数做 60 秒模拟，取 15–25 秒这一段，每张图 20 次的平均。每只果蝇都和 30 张打乱的连接图谱比较，这里只画出其中最强的一张。</p>
+    </div>
+
+    <div class="result">
+      <span class="chip ok">做成了</span>
+      <h3>找到背后的连接规律</h3>
+      <div class="body">
+        <p>真实的神经连接里到处都有这样一种结构：一个上游路口让"伸灯"变绿的同时，会通过一个"刹车"路口让"弯灯"变红。这种结构在每个关节（除了数据很少的脚踝关节）、两只果蝇里都存在，打乱之后就消失了。它其实就是膝跳反射里那个小结构，在整张网络上系统性地重复出现。</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <span class="chip ok">做成了</span>
+      <h3>手术证明：关键在"线接到哪个灯"</h3>
+      <div class="body">
+        <p>把控制线在"伸灯"和"弯灯"之间乱换，轮流亮立刻消失，两组灯甚至变成同时亮。只在同一组灯内部调换，轮流亮几乎不受影响（保留 81% 到 96%）。</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <span class="chip ok">做成了</span>
+      <h3>初步定位：主要在腿根处"往前转"和"往后转"的一对肌肉</h3>
+      <div class="body">
+        <p>轮流亮最强的地方，是腿根（基节）让腿往前转和往后转的两组肌肉，在中腿和后腿最明显，两只果蝇都有。这还是初步结果，见下面"进行中"的第三条。</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <span class="chip no">没成功</span>
+      <h3>早期的高分，有一部分是"刚通电时的抖动"</h3>
+      <div class="body">
+        <p>一开始我们只看模拟的前 5 秒，分数很漂亮。后来发现，真实的神经连接在刚通电后有一段约 12 秒的过渡期，像汽车刚启动时的抖动。我们改成只看稳定之后的阶段，重做了全部比较。分数变低了，但"只有真实的神经连接能让灯轮流亮"这个结论还在。</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <span class="chip no">没成功</span>
+      <h3>用模型预测真实果蝇"腿伸还是腿弯"</h3>
+      <div class="body">
+        <p>别人做过实验：激活某一类神经元，果蝇的腿会伸直或弯曲。我们事先定好了测试，结果 12 类里只猜对 7 类，和瞎猜差不多。原因是：只看这类神经元是"油门型"还是"刹车型"，就能猜对 9 类。任何保留神经元身份的打乱连接图谱都能做到这一点，所以这个测试分不出真假。</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <span class="chip no">没成功</span>
+      <h3>逐个拆掉约 2,000 种细胞，找"关键细胞"</h3>
+      <div class="body">
+        <p>考虑到比较了这么多次之后，没有哪种细胞的影响超过随机拆除。一度看好的候选（叫 01A 的一群神经元），在第二只果蝇里也没有复现。这说明轮流亮不靠某一种关键细胞，而是分布在整张网络里。</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <span class="chip no">没成功</span>
+      <h3>"切断感觉反馈，前进距离下降 90%"是算错了</h3>
+      <div class="body">
+        <p>接上果蝇身体模型后，我们一度以为感觉反馈特别重要。后来发现统计方法不对，改成一对一比较后，结论变成"感觉反馈在部分情况下有帮助"。</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <span class="chip wip">进行中</span>
+      <h3>"电量不变的换线手术"只做到了一半</h3>
+      <div class="body">
+        <p>为了排除"只是某个灯收到的电多了或少了"这种解释，我们做了一版保持每个灯总电量不变的换线手术。轮流亮减少了三到四成，没到事先定的"减半"标准。后来发现这一版实际只换了一半的线，比较不公平。公平版正在电脑上跑。</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <span class="chip wip">进行中</span>
+      <h3>第二只果蝇的协调会"熄火"</h3>
+      <div class="body">
+        <p>在 MANC 里，约五分之一的模拟跑一阵之后，会突然切换成快速乱闪、不再轮流，而且回不来。我们在跑 5 分钟的长时程模拟，看它会不会越来越多。</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <span class="chip wip">进行中</span>
+      <h3>需要核实的地方</h3>
+      <div class="body">
+        <p>腿根那组灯里，有一部分神经元到底对应哪块肌肉，是根据名字推测的。另外，结论依赖"谷氨酸是刹车型"这个假设：在早期的短模拟里，把它改成油门型，真实神经连接的优势就没了。这两点都在核实或重测。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="num">5</span><h2>别人说过什么，我们多做了什么</h2></div>
+  <div class="cmp">
+    <div class="cmp-row">
+      <div class="cmp-who">谢灵顿与膝跳反射 <span>· 一百多年前的经典生理学</span></div>
+      <div class="cmp-cell"><b>他们发现</b>一块肌肉用力时，对抗的那块会自动放松。相当于知道一个路口里有让两组灯轮流的装置。</div>
+      <div class="cmp-cell ours"><b>我们多做的</b>在一万个路口的完整地图里证明：这种结构系统性地存在，轮流亮依赖它，换成别的连接方式就不行。</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-who">Pugliese 等 <span>· 华盛顿大学 Tuthill 与 Brunton 实验室，2025 年预印本</span></div>
+      <div class="cmp-cell"><b>他们发现</b>在神经连接模拟里找到一个由 3 个神经元组成的"总时钟"，能让六条腿都有节奏，并用实验验证了模型的一个预测。</div>
+      <div class="cmp-cell ours"><b>我们多做的</b>发现"打拍子"随便什么连接方式都能搭出来，所以"能产生节律"本身不能说明神经连接特殊，真正由神经连接决定的是"轮流"。我们并不否定他们找到的电路，只是说明节律不适合用来检验神经连接。</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-who">Syed 等 <span>· 加州大学圣塔芭芭拉分校 Simpson 实验室，eLife 2025</span></div>
+      <div class="cmp-cell"><b>他们发现</b>一类"刹车"神经元（13A/13B）组成的通路，能让腿一弯一伸（果蝇理毛时）。相当于找到了几条让灯轮流的控制线。</div>
+      <div class="cmp-cell ours"><b>我们多做的</b>在我们的模型里，单独剪掉这几条线并不能让轮流消失。轮流靠的是分布在全网、有很多备份的结构。这是早期短模拟的初步结果。</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-who">Lesser 等 <span>· Tuthill 实验室，Nature 2024</span></div>
+      <div class="cmp-cell"><b>他们发现</b>控制腿的神经元按"管哪组肌肉"分成模块，就像路口按街区分工。</div>
+      <div class="cmp-cell ours"><b>我们多做的</b>各神经元"家族"偏向伸还是弯，在两只果蝇里高度一致（相关系数 0.77）。我们还用手术检验这种分工和功能的关系。</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-who">用神经连接控制身体的已有工作 <span>· 例如 Brunton 等 2026 年的研究</span></div>
+      <div class="cmp-cell"><b>他们发现</b>只要有训练出来的"翻译器"，连线虫的神经连接都能让果蝇身体走起来。说明"能走"不代表神经连接重要。</div>
+      <div class="cmp-cell ours"><b>我们多做的</b>去掉所有可训练的部分，只用真实接口，再和打乱的连接图谱比较，直接回答"神经连接本身贡献了什么"。</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-who">Sapkal 等 <span>· 2026 年预印本</span></div>
+      <div class="cmp-cell"><b>他们发现</b>去掉头、减少感觉输入的果蝇，仍然能左右交替地走路。说明不靠感觉也能左右轮流。</div>
+      <div class="cmp-cell ours"><b>我们多做的</b>我们的模型里，后腿出现了可能是真实神经连接特有的左右交替。结果还很初步，将来可以和他们的实验数据对照。</div>
+    </div>
+  </div>
+  <p class="takeaway">前人找到了"时钟"和几条"控制线"。我们用打乱的连接图谱做对照，把"哪些是神经连接决定的"分辨清楚了：时钟不稀奇，轮流才是神经连接的签名。我们没有推翻谁，但修正了一个常见的默认想法："模型能产生节律，就说明神经连接很重要。"</p>
+  <p class="muted small">以上对比基于我们目前查到的文献，还没有做系统检索。说"新"的地方，都需要进一步核实。</p>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="num">6</span><h2>这对人有什么意义</h2></div>
+  <div class="stack">
+    <p><strong>同一个问题：走路有多少是天生的？</strong>果蝇从蛹里出来几乎马上就会走。人也有类似的现象：新生儿被抱起来、脚一碰到桌面，会自动做出迈步动作，这叫踏步反射。说明人的脊髓里也有天生的"走路电路"。</p>
+    <p><strong>同一条原则：一块肌肉用力，对抗的那块要放松。</strong>你伸直胳膊时，后侧的三头肌收缩，前侧的二头肌会自动放松。研究哺乳动物脊髓的学者一直认为，走路电路分两层："打拍子"和"安排谁先谁后"。我们在一张完整的神经连接图谱里看到的，正是这种分工：打拍子容易，安排先后要靠特定的神经连接。人类没有完整的脊髓连接图谱，这种检验目前只能先在果蝇身上做。</p>
+    <p><strong>医学上，意义很远，而且是间接的。</strong>中风、脊髓损伤、肌张力障碍的病人，常见"该放松的肌肉不放松、两边同时用力"，临床上认为这和对抗肌肉之间的抑制受损有关。弄清楚"协调由神经连接的哪一部分决定"，有助于理解这类问题。但我们做的是果蝇的计算模型，不能直接推出治疗方法。</p>
+    <p><strong>对机器人和 AI 的意义。</strong>我们的结果提示：给机器人设计运动控制器时，"有节奏"几乎是白送的，"各关节配合好"才需要特定的结构。果蝇的神经连接规律可以成为设计蓝图。这又回到了起点：那个会走路的机器人。</p>
+    <p class="muted small">限制：果蝇和人差别很大，结论都来自计算模型，还没有和真实果蝇的数据做过对照。</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <h2>我正在寻找这些帮助</h2>
+  <div class="stack">
+    <p>现在（2026 年 9 月 27 日），实验室的电脑正在跑三个实验：定位是哪些肌肉在轮流、公平版的换线手术、第二只果蝇的长时程模拟。结果出来后，我计划整理成论文，投给 Nature Communications。下面几类同学，我特别需要：</p>
+    <div class="help">
+      <div class="key"><b>做过果蝇行为或电生理的同学</b><p>帮忙找已经发表的"果蝇走路时腿部肌肉或运动神经元的记录"，和模型的预测做对照。这是投稿前最缺的一块。</p></div>
+      <div><b>懂果蝇解剖、特别是腿部肌肉的同学</b><p>帮忙核对"哪个运动神经元控制哪块肌肉"，尤其是腿根的旋转肌。</p></div>
+      <div><b>懂计算神经科学或动力系统的同学</b><p>帮忙理解第二只果蝇为什么会"熄火"，在两种状态之间切换。</p></div>
+      <div><b>做机器人的同学</b><p>把"轮流亮"的连接规律用到机器人控制器上。</p></div>
+    </div>
+    <p>感兴趣的话，欢迎直接找我聊。</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <h2>术语对照</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>科学术语</th><th>意思</th><th>比方</th></tr></thead>
+      <tbody>
+        <tr><td>连接组</td><td>一只动物所有神经元和它们之间连接的完整清单，也就是神经连接图谱</td><td>城市道路地图</td></tr>
+        <tr><td>运动神经元</td><td>直接控制肌肉的神经元</td><td>红绿灯的控制盒</td></tr>
+        <tr><td>拮抗肌</td><td>作用相反的一对肌肉，比如让腿伸的和让腿弯的</td><td>十字路口的两组灯</td></tr>
+        <tr><td>节律</td><td>神经活动有节奏地起伏</td><td>灯一闪一闪</td></tr>
+        <tr><td>拮抗协调（反相）</td><td>一对拮抗肌轮流活动</td><td>两组灯轮流亮</td></tr>
+        <tr><td>零模型</td><td>保留某些统计特征、其余随机打乱的假连接图谱</td><td>重新乱连的假地图</td></tr>
+        <tr><td>交互抑制</td><td>让一侧兴奋的同时，通过抑制性神经元让另一侧放松</td><td>一边放行，一边踩刹车</td></tr>
+        <tr><td>强化学习</td><td>让程序反复试错、按得分好坏调整自己</td><td>司机靠无数次练车学会开车</td></tr>
+        <tr><td>师生蒸馏</td><td>让一个"学生"网络模仿已经训练好的"老师"网络</td><td>抄老师的作业</td></tr>
+        <tr><td>预注册</td><td>在看结果之前写下判断标准</td><td>考试前先定好及格线</td></tr>
+        <tr><td>DNg100</td><td>一种能启动走路的下行神经元</td><td>"开始走"按钮</td></tr>
+        <tr><td>MaleCNS、MANC</td><td>两只不同雄果蝇的神经连接图谱数据集</td><td>两座城市的地图</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>写于 2026 年 9 月 27 日。所有实验记录、代码和预注册文件都存档在实验室 NAS 上。结果在正式发表前仍可能修改；标注"初步"的内容尤其如此。</footer>
+
+</div>
+</main>
+<div class="site-version">Isabel Yani Guan · site v1.7.0 · updated Sep 2026</div>
+</body>
+</html>
