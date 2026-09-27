@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-site-version="1.1.0">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -470,6 +470,43 @@
     color: var(--pink);
     border-bottom-color: var(--pink);
     font-weight: 600;
+  }
+
+  /* ============ NOTES ============ */
+  .notes-card {
+    grid-column: span 12;
+    background: var(--cream-2);
+    padding: 36px 40px 40px;
+  }
+  .notes-intro {
+    max-width: 760px;
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 28px;
+  }
+  .note-entry {
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+    max-width: 760px;
+  }
+  .note-date {
+    color: var(--ink-mute);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .note-entry h4 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin: 10px 0 18px;
+  }
+  .note-entry p {
+    font-size: 16px;
+    line-height: 1.85;
+    margin-top: 14px;
   }
 
   /* ============ RECENT DEMO ============ */
@@ -1052,7 +1089,7 @@
 
   /* ============ RESPONSIVE ============ */
   @media (max-width: 900px) {
-    .hero-card, .hero-robot, .about-card, .recent-demo-card, .news-card,
+    .hero-card, .hero-robot, .about-card, .recent-demo-card, .news-card, .notes-card,
     .research-card, .teaching-card, .book-mini,
     .pub-card, .contact-card, .venture-card, .industry-mini,
     .footer, .section-head {
@@ -1099,6 +1136,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#recent-demo">Recent Demo</a></li>
     <li><a href="#news">News</a></li>
+    <li><a href="#notes">Notes</a></li>
     <li><a href="#research">Research</a></li>
     <li><a href="#teaching">Teaching</a></li>
     <li><a href="#writing">Publications</a></li>
@@ -1290,9 +1328,27 @@
     </div>
 
 
+    <!-- NOTES -->
+    <div class="section-head" id="notes">
+      <span class="num">04</span>
+      <h3>Notes &amp; Musings · 碎碎念</h3>
+      <span class="line"></span>
+    </div>
+
+    <div class="card notes-card">
+      <p class="notes-intro">A place for thoughts in progress: research questions, things I notice, and ideas that may take more than a few lines to explain.</p>
+      <article class="note-entry" lang="zh-CN">
+        <div class="note-date mono"><time datetime="2026-09-27">27 Sep 2026</time> · Opening note</div>
+        <h4>给还没想明白的事留个位置</h4>
+        <p>不是每个想法都要等到变成论文，才值得写下来。有些问题刚出现时，只有一点直觉、一句疑问，或者一次实验之后说不清的感觉。先记下来，过一阵子再回头看，也许会发现自己真正关心的是什么。</p>
+        <p>这里会放一些科研过程中的想法，也会放日常里突然冒出来的念头。有时只有几行，有时会写得很长。允许想法暂时不完整，也允许以后改变主意。</p>
+      </article>
+    </div>
+
+
     <!-- RESEARCH -->
     <div class="section-head" id="research">
-      <span class="num">04</span>
+      <span class="num">05</span>
       <h3>Research</h3>
       <span class="line"></span>
     </div>
@@ -1327,7 +1383,7 @@
 
     <!-- TEACHING -->
     <div class="section-head" id="teaching">
-      <span class="num">05</span>
+      <span class="num">06</span>
       <h3>Teaching</h3>
       <span class="line"></span>
     </div>
@@ -1418,7 +1474,7 @@
 
     <!-- RECENT PUBLICATIONS -->
     <div class="section-head" id="writing">
-      <span class="num">06</span>
+      <span class="num">07</span>
       <h3>Recent Publications</h3>
       <span class="line"></span>
     </div>
@@ -1482,7 +1538,7 @@
 
     <!-- ENTREPRENEURSHIP -->
     <div class="section-head" id="entrepreneurship">
-      <span class="num">07</span>
+      <span class="num">08</span>
       <h3>Entrepreneurship</h3>
       <span class="line"></span>
     </div>
@@ -1542,7 +1598,7 @@
     <!-- FOOTER -->
     <div class="footer">
       <div class="f-sig">Isabel Yani Guan · 2026</div>
-      <div class="f-meta">HKUST · last updated May 2026</div>
+      <div class="f-meta">HKUST · site v1.1.0 · updated Sep 2026</div>
     </div>
 
   </div>
