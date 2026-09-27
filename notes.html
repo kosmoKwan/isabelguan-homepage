@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-site-version="1.2.0">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Isabel Yani Guan 的随笔：科研过程中的问题、日常想法，以及还在生长中的念头。" />
+<title>Notes &amp; Musings · 碎碎念 — Isabel Yani Guan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FFF4E0;
+    --cream-2: #FFEAC2;
+    --ink: #2E2418;
+    --ink-soft: #5C4A37;
+    --ink-mute: #8E7E69;
+    --rule: rgba(46, 36, 24, 0.14);
+    --pink: #FF4D8D;
+    --yellow: #FFCB3A;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .mono { font-family: 'DM Mono', 'Courier New', monospace; }
+  .nav {
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 16px;
+    padding: 12px;
+    border-radius: 100px;
+    background: var(--pink);
+    width: fit-content;
+    max-width: calc(100% - 32px);
+  }
+  .nav a {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 100px;
+    color: var(--cream);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav a:hover { color: var(--yellow); }
+  .nav a[aria-current="page"] { background: var(--cream); color: var(--ink); }
+  main { max-width: 1100px; margin: 0 auto; padding: 64px 24px 100px; }
+  .eyebrow {
+    color: var(--pink);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  h1 {
+    max-width: 900px;
+    margin: 18px 0 20px;
+    font-family: 'Bricolage Grotesque', 'DM Sans', sans-serif;
+    font-size: clamp(48px, 8vw, 94px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+  h1 span { color: var(--pink); }
+  .intro {
+    max-width: 700px;
+    margin: 0 0 72px;
+    color: var(--ink-soft);
+    font-size: clamp(17px, 2vw, 20px);
+    line-height: 1.75;
+  }
+  .entry {
+    max-width: 800px;
+    padding: 34px 0 44px;
+    border-top: 1px solid var(--rule);
+  }
+  .entry-meta {
+    color: var(--ink-mute);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .entry h2 {
+    margin: 14px 0 25px;
+    font-family: 'Bricolage Grotesque', 'DM Sans', sans-serif;
+    font-size: clamp(29px, 4vw, 42px);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+  .entry p {
+    max-width: 740px;
+    margin: 0 0 20px;
+    font-size: 17px;
+    line-height: 1.9;
+  }
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 24px 36px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-mute);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 600px) {
+    main { padding: 44px 22px 72px; }
+    .intro { margin-bottom: 56px; }
+    .entry p { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Site navigation">
+  <a href="index.html">← Home</a>
+  <a href="notes.html" aria-current="page">Notes / 碎碎念</a>
+</nav>
+
+<main>
+  <div class="eyebrow mono">Isabel Yani Guan · A thinking space</div>
+  <h1>Notes <span>&amp;</span><br>Musings.</h1>
+  <p class="intro">科研过程中的问题，日常里突然冒出来的念头，还有一些暂时不需要结论的想法。这里可以写三行，也可以慢慢写成很长的一篇。</p>
+
+  <article class="entry" id="unfinished-thoughts">
+    <div class="entry-meta mono"><time datetime="2026-09-27">27 Sep 2026</time> · Opening note</div>
+    <h2>给还没想明白的事留个位置</h2>
+    <p>不是每个想法都要等到变成论文，才值得写下来。有些问题刚出现时，只有一点直觉、一句疑问，或者一次实验之后说不清的感觉。先记下来，过一阵子再回头看，也许会发现自己真正关心的是什么。</p>
+    <p>这里会放一些科研过程中的想法，也会放日常里突然冒出来的念头。有时只有几行，有时会写得很长。允许想法暂时不完整，也允许以后改变主意。</p>
+  </article>
+</main>
+
+<footer class="mono">Isabel Yani Guan · site v1.2.0 · updated Sep 2026</footer>
+</body>
+</html>
